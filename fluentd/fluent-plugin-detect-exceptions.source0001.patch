@@ -1,16 +1,18 @@
 diff --git a/lib/fluent/plugin/exception_detector.rb b/lib/fluent/plugin/exception_detector.rb
-index d7c78b4..4fd62c6 100644
+index d7c78b4..3eb52b3 100644
 --- a/lib/fluent/plugin/exception_detector.rb
 +++ b/lib/fluent/plugin/exception_detector.rb
-@@ -53,7 +53,7 @@ module Fluent
+@@ -53,8 +53,9 @@ module Fluent
  
      JAVA_RULES = [
        rule([:start_state, :java_start_exception],
 -           /(?:Exception|Error|Throwable|V8 errors stack trace)[:\r\n]/,
 +           /(?:(Exception|Error|Throwable|V8 errors stack trace)[:\r\n]|java[x]?\..*(Exception|Error))/,
             :java_after_exception),
++      rule([:start_state, :java_start_exception], /(Error\s*$|V8 errors stack trace\s*$)/, :java_after_exception),
        rule(:java_after_exception, /^[\t ]*nested exception is:[\t ]*/,
             :java_start_exception),
+       rule(:java_after_exception, /^[\r\n]*$/, :java_after_exception),
 diff --git a/test/plugin/test_exception_detector.rb b/test/plugin/test_exception_detector.rb
 index f001d0e..4270c19 100644
 --- a/test/plugin/test_exception_detector.rb

@@ -280,7 +280,7 @@ GEM
       activesupport
       faraday (~> 1.7)
       faraday_middleware (~> 1.1)
-    webrick (1.8.1)
+    webrick (1.8.2)
     yajl-ruby (1.4.3)
 
 PLATFORMS
@@ -319,6 +319,7 @@ DEPENDENCIES
   remote_syslog_sender!
   syslog_protocol!
   typhoeus
+  webrick (= 1.8.2)
 
 BUNDLED WITH
    2.3.7
